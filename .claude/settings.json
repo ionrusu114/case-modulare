@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+
+  "model": "claude-opus-4-8",
+
+  "permissions": {
+    "allow": [
+      "Bash(bun:*)",
+      "Bash(bunx:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(pnpm:*)",
+      "Bash(node:*)",
+      "Bash(vite:*)",
+      "Bash(vitest:*)",
+      "Bash(vue-tsc:*)",
+      "Bash(tsc:*)",
+      "Bash(eslint:*)",
+      "Bash(biome:*)",
+      "Bash(prettier:*)",
+      "Bash(playwright:*)",
+      "Bash(playwright-cli:*)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git show:*)",
+      "Bash(git fetch:*)",
+      "Bash(git stash:list)",
+      "Bash(gh pr list)",
+      "Bash(gh pr view:*)",
+      "Bash(gh issue list)",
+      "Bash(gh issue view:*)",
+      "Bash(ls:*)",
+      "Bash(wc:*)",
+      "Bash(file:*)",
+      "Bash(mkdir -p:*)",
+      "Read(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "Write(src/**)",
+      "Write(public/**)",
+      "Write(tests/**)",
+      "Write(e2e/**)",
+      "Write(.claude/**)",
+      "Write(.github/**)",
+      "Write(CLAUDE.md)",
+      "Write(README.md)",
+      "Write(CHANGELOG.md)",
+      "Write(package.json)",
+      "Write(vite.config.ts)",
+      "Write(tsconfig.json)",
+      "Write(.gitignore)",
+      "Write(.editorconfig)",
+      "Edit(src/**)",
+      "Edit(public/**)",
+      "Edit(tests/**)",
+      "Edit(e2e/**)",
+      "Edit(.claude/**)",
+      "Edit(.github/**)",
+      "Edit(CLAUDE.md)"
+    ],
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(gh pr create:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf /:*)",
+      "Bash(git push --force:*)",
+      "Bash(git reset --hard origin/main)",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Write(.env)",
+      "Write(.env.*)",
+      "Write(**/*.pem)",
+      "Write(**/*.key)",
+      "Edit(.env)",
+      "Edit(.env.*)"
+    ],
+    "defaultMode": "default"
+  },
+
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": ["context7", "sequential-thinking"],
+
+  "env": {
+    "PYTHONIOENCODING": "utf-8"
+  },
+
+  "cleanupPeriodDays": 30,
+
+  "hooks": {
+    "PreToolUse": [],
+    "PostToolUse": []
+  },
+
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true,
+    "frontend-design@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "caveman@caveman": true,
+    "elements-of-style@superpowers-marketplace": true,
+    "claude-code-setup@claude-plugins-official": true,
+
+    "pyright-lsp@claude-plugins-official": false,
+    "rust-analyzer-lsp@claude-plugins-official": false,
+    "python-development@claude-code-workflows": false,
+    "backend-development@claude-code-workflows": false,
+    "database-design@claude-code-workflows": false,
+    "database-migrations@claude-code-workflows": false,
+    "cloud-infrastructure@claude-code-workflows": false,
+    "kubernetes-operations@claude-code-workflows": false,
+    "document-skills@anthropic-agent-skills": false,
+    "huggingface-skills@claude-plugins-official": false,
+    "obsidian@obsidian-skills": false,
+    "firecrawl@claude-plugins-official": false,
+    "sourcegraph@claude-plugins-official": false,
+    "warp@claude-code-warp": false,
+    "supabase@claude-plugins-official": false,
+    "claude-mem@thedotmack": false
+  }
+}

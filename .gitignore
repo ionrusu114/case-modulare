@@ -1,0 +1,42 @@
+# ───────── Dependencies ─────────
+node_modules/
+.pnp
+.pnp.js
+
+# ───────── Build output ─────────
+dist/
+dist-ssr/
+*.tsbuildinfo
+.vite/
+
+# ───────── Secrets & env (NEVER commit) ─────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ───────── Local / editor / OS ─────────
+*.local
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ───────── Tooling state (not part of the app) ─────────
+.test-artifacts/
+.playwright-mcp/
+.omc/
+.claude/settings.local.json
+
+# ───────── 3D / Blender working files (local history, large, may hold the AI key) ─────────
+.blender/
+textures/
+
+# ───────── Source material (reference images/video — not shipped; app uses public/) ─────────
+example_images/

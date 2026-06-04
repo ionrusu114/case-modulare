@@ -1,0 +1,25 @@
+services:
+  case-modulare:
+    image: ionrusu114/case-modulare:latest
+    container_name: case-modulare
+    networks:
+      - proxynet
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxynet"
+      - "traefik.http.routers.case_modulare.rule=Host(`case-modulare.arut267.online`)"
+      - "traefik.http.routers.case_modulare.entrypoints=https"
+      - "traefik.http.routers.case_modulare.tls=true"
+      - "traefik.http.routers.case_modulare.tls.certresolver=le"
+      - "traefik.http.services.case_modulare.loadbalancer.server.port=80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+networks:
+  proxynet:
+    external: true

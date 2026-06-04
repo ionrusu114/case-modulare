@@ -1,0 +1,32 @@
+# Build context hygiene — keep the image small and secrets out
+node_modules
+dist
+dist-ssr
+.git
+.github
+.vite
+.test-artifacts
+.playwright-mcp
+
+# Secrets / local
+.env
+.env.*
+!.env.example
+.blender
+textures
+
+# Source material not needed at build time
+example_images
+
+# Editor / OS / tooling
+.claude
+.omc
+.vscode
+.idea
+.DS_Store
+*.log
+npm-debug.log*
+README.md
+Dockerfile
+.dockerignore
+docker-compose*.yml
