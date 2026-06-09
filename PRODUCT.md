@@ -1,10 +1,10 @@
-# PRODUCT.md — MODULA (Case Modulare)
+# PRODUCT.md — SpaceBox (Case Modulare)
 
 > Context pentru `impeccable`. Sursa de adevăr pentru conținut: imaginile din `example_images/`.
 > Limba site-ului: **Română**.
 
 ## Brand
-- **Nume:** MODULA
+- **Nume:** SpaceBox
 - **Promisiune:** Spații modulare gata de locuit, livrate rapid — de la capsule premium la containere funcționale.
 - **Poziționare:** Calitate de showroom + inginerie reală (oțel galvanizat, izolație performantă), timp de execuție 15–20 de zile.
 - **Ton:** Încrezător, curat, tehnic-dar-uman. Fără clișee de marketing. Beneficii concrete + cifre.
@@ -54,7 +54,7 @@
 - **Timp execuție:** 15–20 zile
 - **Culori disponibile:** Gri deschis (RAL 7035), Antracit (RAL 7016)
 
-## Argumente cheie (USP) — afișabile ca „de ce MODULA"
+## Argumente cheie (USP) — afișabile ca „de ce SpaceBox"
 - Livrare rapidă: **15–20 de zile** execuție.
 - Structură din **oțel galvanizat** + izolație **vată minerală** = durabil, eficient termic.
 - Finisaje la cheie (interior gips-carton + lavabilă, tâmplărie termopan).

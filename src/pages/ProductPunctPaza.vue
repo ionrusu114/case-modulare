@@ -14,11 +14,58 @@ const view = ref<'exterior' | 'interior'>('exterior')
 const activeId = ref<string | null>(null)
 const active = computed(() => hotspots.find((h) => h.id === activeId.value) || null)
 
+const siteUrl = 'https://spacebox.md'
+const pageUrl = `${siteUrl}/produs/punct-de-paza`
+const pageImage = `${siteUrl}/gallery/punct-paza.jpeg`
+const pageDescription =
+  'Configurează Punctul de Pază Modular SpaceBox: model 3D interactiv, vezi interiorul și exteriorul, schimbă culoarea (RAL 7035 / 7016) și descoperă specificațiile. 7.20 m², structură oțel galvanizat, montaj 15–20 zile.'
+
 useHead({
   title: 'Punct de Pază Modular 3.00 × 2.40 m — model 3D interactiv',
+  link: [{ rel: 'canonical', href: pageUrl }],
   meta: [
-    { name: 'description', content: 'Configurează Punctul de Pază Modular MODULA: model 3D interactiv, vezi interiorul și exteriorul, schimbă culoarea (RAL 7035 / 7016) și descoperă specificațiile. 7.20 m², structură oțel galvanizat, montaj 15–20 zile.' },
-    { property: 'og:title', content: 'Punct de Pază Modular — model 3D interactiv | MODULA' },
+    { name: 'description', content: pageDescription },
+    { name: 'robots', content: 'index, follow, max-image-preview:large' },
+    { property: 'og:type', content: 'product' },
+    { property: 'og:site_name', content: 'SpaceBox' },
+    { property: 'og:locale', content: 'ro_RO' },
+    { property: 'og:title', content: 'Punct de Pază Modular — model 3D interactiv | SpaceBox' },
+    { property: 'og:description', content: pageDescription },
+    { property: 'og:url', content: pageUrl },
+    { property: 'og:image', content: pageImage },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:image', content: pageImage },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify([
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Product',
+          name: 'Punct de Pază Modular',
+          category: 'Case modulare',
+          description: pageDescription,
+          image: pageImage,
+          url: pageUrl,
+          brand: { '@type': 'Brand', name: 'SpaceBox' },
+          material: 'Oțel galvanizat',
+          additionalProperty: [
+            { '@type': 'PropertyValue', name: 'Suprafață utilă', value: '7.20 m²' },
+            { '@type': 'PropertyValue', name: 'Dimensiuni', value: '3.00 × 2.40 × 2.80 m' },
+            { '@type': 'PropertyValue', name: 'Timp execuție', value: '15–20 zile' },
+          ],
+        },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Acasă', item: siteUrl },
+            { '@type': 'ListItem', position: 2, name: 'Punct de Pază Modular', item: pageUrl },
+          ],
+        },
+      ]),
+    },
   ],
 })
 </script>
@@ -28,8 +75,8 @@ useHead({
     <!-- Slim header -->
     <header class="sticky top-0 z-50 border-b border-graphite/60 bg-ink/85 backdrop-blur-md">
       <div class="container-x flex h-16 items-center justify-between">
-        <RouterLink to="/" class="font-display text-lg font-extrabold tracking-tight text-cloud">
-          MODULA<span class="text-ember">.</span>
+        <RouterLink to="/" class="font-logo text-xl tracking-tight text-cloud" aria-label="SpaceBox — acasă">
+          <span class="font-medium">Space</span><span class="font-bold">Box</span><span class="text-ember">.</span>
         </RouterLink>
         <div class="flex items-center gap-5">
           <RouterLink to="/" class="text-sm text-cloud/70 transition-colors hover:text-cloud">← Acasă</RouterLink>

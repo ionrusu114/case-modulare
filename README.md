@@ -1,4 +1,4 @@
-# MODULA — Case Modulare
+# SpaceBox — Case Modulare
 
 Landing page 3D pentru case modulare (capsule premium, containere, chioșcuri, puncte de pază).
 Hero 3D interactiv (WebGL) cu explode pe scroll, configurator de produs (rotire, interior, schimbare culoare RAL), galerie cu lightbox, SEO + prerender.

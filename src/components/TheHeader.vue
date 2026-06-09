@@ -30,8 +30,8 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
     "
   >
     <nav class="container-x flex h-16 items-center justify-between" aria-label="Navigație principală">
-      <a href="#top" class="font-display text-lg font-extrabold tracking-tight text-cloud">
-        MODULA<span class="text-ember">.</span>
+      <a href="#top" class="font-logo text-xl tracking-tight text-cloud" aria-label="SpaceBox — acasă">
+        <span class="font-medium">Space</span><span class="font-bold">Box</span><span class="text-ember">.</span>
       </a>
 
       <ul class="hidden items-center gap-8 md:flex">

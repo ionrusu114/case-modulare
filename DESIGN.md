@@ -1,4 +1,4 @@
-# DESIGN.md — MODULA
+# DESIGN.md — SpaceBox
 
 Design system dictated by `impeccable` (brand register). Tokens live in `src/style.css` (`@theme`).
 

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "MODULA — landing 3D pentru case modulare: capsule premium, containere, chioșcuri și puncte de pază.",
+  "description": "SpaceBox — landing pentru case modulare: capsule premium, containere, chioșcuri și puncte de pază.",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite-ssg build",

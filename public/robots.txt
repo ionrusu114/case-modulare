@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://modula.ro/sitemap.xml
+Sitemap: https://spacebox.md/sitemap.xml

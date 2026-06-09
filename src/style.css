@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-/* ---- MODULA design tokens (see DESIGN.md) ---- */
+/* ---- SpaceBox design tokens (see DESIGN.md) ---- */
 @theme {
   /* Color — OKLCH, warm-tinted neutrals */
   --color-ink: oklch(0.16 0.006 80);
@@ -13,6 +13,7 @@
   --color-ember-deep: oklch(0.66 0.15 55);
 
   /* Type families */
+  --font-logo: 'Space Grotesk', 'Sora', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
   --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;

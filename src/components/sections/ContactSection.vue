@@ -38,7 +38,9 @@ useGsapContext(() => {
           </div>
           <div>
             <dt class="text-xs uppercase tracking-wide text-cloud/40">Email</dt>
-            <dd class="text-spec mt-1 text-lg">contact@modula.ro</dd>
+            <dd class="text-spec mt-1 text-lg">
+              <a href="mailto:contact@spacebox.md" class="transition-colors hover:text-ember">contact@spacebox.md</a>
+            </dd>
           </div>
           <div>
             <dt class="text-xs uppercase tracking-wide text-cloud/40">Livrare</dt>

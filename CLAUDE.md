@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-**MODULA** — a Romanian, performance-first **3D landing page** for modular houses (case modulare):
+**SpaceBox** — a Romanian, performance-first **3D landing page** for modular houses (case modulare):
 premium capsules, living containers, two-storey units, commercial kiosks, guard posts. The site is a
 single long-scroll presentation page. Content language is **Romanian**; the source of truth for product
 copy/specs is the imagery in `example_images/` (distilled into `src/data/catalog.ts`).

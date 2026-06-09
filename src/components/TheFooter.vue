@@ -6,8 +6,8 @@ const year = new Date().getFullYear()
   <footer class="border-t border-graphite/60 bg-ink text-cloud/60">
     <div class="container-x flex flex-col gap-8 py-12 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <a href="#top" class="font-display text-lg font-extrabold tracking-tight text-cloud">
-          MODULA<span class="text-ember">.</span>
+        <a href="#top" class="font-logo text-xl tracking-tight text-cloud" aria-label="SpaceBox — acasă">
+          <span class="font-medium">Space</span><span class="font-bold">Box</span><span class="text-ember">.</span>
         </a>
         <p class="mt-2 max-w-xs text-sm">
           Case și spații modulare premium. Proiectate, fabricate și montate la cheie.
@@ -22,7 +22,7 @@ const year = new Date().getFullYear()
       </nav>
     </div>
     <div class="container-x border-t border-graphite/40 py-6 text-xs text-cloud/40">
-      © {{ year }} MODULA. Toate drepturile rezervate.
+      © {{ year }} SpaceBox. Toate drepturile rezervate.
     </div>
   </footer>
 </template>
