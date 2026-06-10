@@ -27,7 +27,7 @@ useGsapContext(({ reduced }) => {
       <div class="max-w-[44rem]">
         <p class="reveal text-spec mb-4 text-sm tracking-[0.18em] text-ember uppercase">Procesul</p>
         <h2 class="reveal font-display text-cloud" style="font-size: var(--text-h2); line-height: var(--text-h2--line-height); letter-spacing: var(--text-h2--letter-spacing)">
-          De la idee la cheie, în 15–20 de zile
+          De la idee la cheie, începând de la 15 zile
         </h2>
       </div>
 

@@ -25,7 +25,7 @@ useGsapContext(() => {
       <div>
         <p class="reveal text-spec mb-4 text-sm tracking-[0.18em] text-ember uppercase">Contact</p>
         <h2 class="reveal max-w-[14ch] font-display text-cloud" style="font-size: var(--text-hero); line-height: 0.98; letter-spacing: -0.03em">
-          Hai să-l construim.
+          Hai <span class="whitespace-nowrap">să-l</span> construim.
         </h2>
         <p class="reveal measure mt-6 text-lg text-cloud/65">
           Spune-ne ce ai în minte. Revenim cu o ofertă fermă, dimensiuni, culori RAL și termen de livrare.
