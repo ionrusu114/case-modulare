@@ -13,8 +13,11 @@ export default defineConfig({
   plugins: [
     vue(),
     tailwindcss(),
-    compression({ algorithm: 'gzip' }),
-    compression({ algorithm: 'brotliCompress' }),
+    // Exclude .html: vite-ssg prerenders/overwrites index.html AFTER this plugin runs, so a
+    // precompressed .gz/.br would be the stale pre-render shell. nginx gzips HTML on the fly
+    // from the real prerendered file; JS/CSS/SVG stay precompressed (their output is final here).
+    compression({ algorithm: 'gzip', exclude: [/\.html$/] }),
+    compression({ algorithm: 'brotliCompress', exclude: [/\.html$/] }),
   ],
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
