@@ -3,7 +3,7 @@
 Landing page 3D pentru case modulare (capsule premium, containere, chioșcuri, puncte de pază).
 Hero 3D interactiv (WebGL) cu explode pe scroll, configurator de produs (rotire, interior, schimbare culoare RAL), galerie cu lightbox, SEO + prerender.
 
-**Live:** https://case-modulare.arut267.online
+**Live:** https://spacebox.md
 
 ## Stack
 Vue 3.5 · Vite 6 · TypeScript · Tailwind CSS v4 · GSAP · three.js · vite-ssg (prerender) · Bun.

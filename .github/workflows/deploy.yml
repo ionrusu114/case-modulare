@@ -42,7 +42,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /root/docker/composes/case-modulare
+            cd /root/docker/composes/spacebox
             docker compose pull
             docker compose up -d
             docker image prune -f

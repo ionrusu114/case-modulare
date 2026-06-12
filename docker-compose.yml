@@ -1,18 +1,29 @@
 services:
-  case-modulare:
+  spacebox:
     image: ionrusu114/case-modulare:latest
-    container_name: case-modulare
+    container_name: spacebox
     networks:
       - proxynet
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxynet"
-      - "traefik.http.routers.case_modulare.rule=Host(`case-modulare.arut267.online`)"
-      - "traefik.http.routers.case_modulare.entrypoints=https"
-      - "traefik.http.routers.case_modulare.tls=true"
-      - "traefik.http.routers.case_modulare.tls.certresolver=le"
-      - "traefik.http.services.case_modulare.loadbalancer.server.port=80"
+      # apex: spacebox.md
+      - "traefik.http.routers.spacebox.rule=Host(`spacebox.md`)"
+      - "traefik.http.routers.spacebox.entrypoints=https"
+      - "traefik.http.routers.spacebox.tls=true"
+      - "traefik.http.routers.spacebox.tls.certresolver=le"
+      - "traefik.http.services.spacebox.loadbalancer.server.port=80"
+      # www -> 301 redirect to apex
+      - "traefik.http.routers.spacebox_www.rule=Host(`www.spacebox.md`)"
+      - "traefik.http.routers.spacebox_www.entrypoints=https"
+      - "traefik.http.routers.spacebox_www.tls=true"
+      - "traefik.http.routers.spacebox_www.tls.certresolver=le"
+      - "traefik.http.routers.spacebox_www.service=spacebox"
+      - "traefik.http.routers.spacebox_www.middlewares=spacebox_wwwredir"
+      - "traefik.http.middlewares.spacebox_wwwredir.redirectregex.regex=^https://www\\.spacebox\\.md/(.*)"
+      - "traefik.http.middlewares.spacebox_wwwredir.redirectregex.replacement=https://spacebox.md/$${1}"
+      - "traefik.http.middlewares.spacebox_wwwredir.redirectregex.permanent=true"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/health"]
       interval: 30s
