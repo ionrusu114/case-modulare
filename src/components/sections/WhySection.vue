@@ -40,6 +40,7 @@ useGsapContext(({ reduced }) => {
       <div class="mt-16 grid gap-px overflow-hidden rounded-2xl border border-graphite/70 bg-graphite/70 sm:grid-cols-3">
         <article v-for="u in usps" :key="u.title" class="reveal bg-ink p-8 sm:p-10">
           <div class="flex items-baseline gap-1 font-display text-cloud">
+            <span v-if="u.prefix" class="text-spec mr-0.5 self-center text-base font-normal text-cloud/55">{{ u.prefix }}</span>
             <span :data-count="u.metric" class="text-6xl font-extrabold tracking-tight">0</span>
             <span class="text-spec text-xl text-ember">{{ u.unit }}</span>
           </div>

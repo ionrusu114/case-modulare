@@ -18,7 +18,7 @@ const siteUrl = 'https://spacebox.md'
 const pageUrl = `${siteUrl}/produs/punct-de-paza`
 const pageImage = `${siteUrl}/gallery/punct-paza.jpeg`
 const pageDescription =
-  'Configurează Punctul de Pază Modular SpaceBox: model 3D interactiv, vezi interiorul și exteriorul, schimbă culoarea (RAL 7035 / 7016) și descoperă specificațiile. 7.20 m², structură oțel galvanizat, montaj 15–20 zile.'
+  'Configurează Punctul de Pază Modular SpaceBox: model 3D interactiv, vezi interiorul și exteriorul, schimbă culoarea (RAL 7035 / 7016) și descoperă specificațiile. 7.20 m², structură oțel galvanizat, montaj de la 15 zile.'
 
 useHead({
   title: 'Punct de Pază Modular 3.00 × 2.40 m — model 3D interactiv',
@@ -53,7 +53,7 @@ useHead({
           additionalProperty: [
             { '@type': 'PropertyValue', name: 'Suprafață utilă', value: '7.20 m²' },
             { '@type': 'PropertyValue', name: 'Dimensiuni', value: '3.00 × 2.40 × 2.80 m' },
-            { '@type': 'PropertyValue', name: 'Timp execuție', value: '15–20 zile' },
+            { '@type': 'PropertyValue', name: 'Timp execuție', value: 'de la 15 zile' },
           ],
         },
         {

@@ -86,7 +86,7 @@ useGsapContext(({ reduced }) => {
       class="container-x relative z-10 flex flex-1 flex-col justify-center py-9 lg:py-0"
     >
       <p data-hero-kicker class="text-spec mb-4 text-sm tracking-[0.2em] text-ember uppercase">
-        Case modulare · livrate în 15–20 de zile
+        Case modulare · livrare de la 15 zile
       </p>
       <div class="lg:grid lg:grid-cols-12 lg:items-end lg:gap-x-10">
         <h1

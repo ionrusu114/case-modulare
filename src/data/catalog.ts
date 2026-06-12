@@ -82,7 +82,7 @@ export const products: Product[] = [
     name: 'Punct de Pază Modular',
     kind: 'Container 3.00 × 2.40 m',
     blurb:
-      'Cabină de pază robustă: structură din oțel galvanizat, izolație din vată minerală, finisaj interior gips-carton cu vopsea lavabilă. Execuție în 15–20 de zile.',
+      'Cabină de pază robustă: structură din oțel galvanizat, izolație din vată minerală, finisaj interior gips-carton cu vopsea lavabilă. Execuție de la 15 zile.',
     image: '/gallery/punct-paza.jpeg',
     alt: 'Punct de pază modular gri cu uși duble vitrate și ferestre laterale',
     specs: [
@@ -99,12 +99,14 @@ export interface Usp {
   unit: string
   title: string
   body: string
+  prefix?: string
 }
 
 export const usps: Usp[] = [
   {
+    prefix: 'de la',
     metric: '15',
-    unit: '–20 zile',
+    unit: 'zile',
     title: 'Livrare rapidă',
     body: 'De la comandă la montaj pe teren, fără șantier interminabil. Te muți în săptămâni, nu în ani.',
   },

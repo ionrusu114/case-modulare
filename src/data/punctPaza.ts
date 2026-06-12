@@ -32,7 +32,7 @@ export const specs: Spec[] = [
   { label: 'Finisaj interior', value: 'Gips-carton + vopsea lavabilă' },
   { label: 'Finisaj exterior', value: 'Panou sandwich' },
   { label: 'Tâmplărie', value: 'PVC / Aluminiu, geam termopan' },
-  { label: 'Timp execuție', value: '15–20 zile' },
+  { label: 'Timp execuție', value: 'de la 15 zile' },
 ]
 
 export const product = {

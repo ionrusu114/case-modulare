@@ -5,7 +5,7 @@ import TheLightbox from '@/components/TheLightbox.vue'
 const siteUrl = 'https://spacebox.md'
 const title = 'SpaceBox — Case Modulare Premium | Capsule, Containere & Spații Modulare'
 const description =
-  'SpaceBox proiectează și livrează case modulare premium: capsule de 11.5 m, containere locuibile, chioșcuri și puncte de pază. Structură din oțel galvanizat, izolație performantă, montaj în 15–20 de zile.'
+  'SpaceBox proiectează și livrează case modulare premium: capsule de 11.5 m, containere locuibile, chioșcuri și puncte de pază. Structură din oțel galvanizat, izolație performantă, montaj de la 15 zile.'
 const ogImage = `${siteUrl}/renders/capsule-hero.jpg`
 const ogImageAlt = 'Capsulă modulară premium SpaceBox de 11.5 m cu balcon, amplasată pe deal'
 

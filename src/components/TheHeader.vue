@@ -29,8 +29,19 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
         : 'border-b border-transparent bg-transparent'
     "
   >
-    <nav class="container-x flex h-16 items-center justify-between" aria-label="Navigație principală">
-      <a href="#top" class="font-logo text-xl tracking-tight text-cloud" aria-label="SpaceBox — acasă">
+    <!-- Soft top scrim so the logo + nav stay legible over the bright hero sky (only before scroll). -->
+    <div
+      v-show="!scrolled"
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink/65 via-ink/25 to-transparent"
+    />
+
+    <nav class="container-x relative flex h-16 items-center justify-between" aria-label="Navigație principală">
+      <a
+        href="#top"
+        class="font-logo text-2xl tracking-tight text-cloud [text-shadow:0_1px_16px_oklch(0.16_0.006_80/0.7)]"
+        aria-label="SpaceBox — acasă"
+      >
         <span class="font-medium">Space</span><span class="font-bold">Box</span><span class="text-ember">.</span>
       </a>
 
