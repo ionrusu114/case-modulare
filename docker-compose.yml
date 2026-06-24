@@ -5,6 +5,10 @@ services:
     networks:
       - proxynet
     restart: unless-stopped
+    # ACTIVE=true (default) -> live site; ACTIVE=false -> maintenance page.
+    # Value comes from the .env written by the deploy workflow (GitHub secret ACTIVE).
+    environment:
+      - ACTIVE=${ACTIVE:-true}
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxynet"

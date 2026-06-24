@@ -15,7 +15,12 @@ RUN bun run build
 # ───────── Runtime (nginx) ─────────
 FROM nginx:1.27-alpine AS runtime
 RUN apk add --no-cache curl
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Both configs ship in the image; the entrypoint script picks one at container
+# start based on the ACTIVE env var (live site vs. maintenance page).
+COPY nginx.conf /etc/nginx/site-available/site.conf
+COPY nginx.maintenance.conf /etc/nginx/site-available/maintenance.conf
+COPY docker-entrypoint.d/40-maintenance-toggle.sh /docker-entrypoint.d/40-maintenance-toggle.sh
+RUN chmod +x /docker-entrypoint.d/40-maintenance-toggle.sh
 COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \

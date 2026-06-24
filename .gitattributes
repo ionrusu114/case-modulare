@@ -1,0 +1,4 @@
+# Shell scripts and nginx configs must stay LF — they run inside Linux containers.
+*.sh text eol=lf
+*.conf text eol=lf
+docker-entrypoint.d/* text eol=lf
