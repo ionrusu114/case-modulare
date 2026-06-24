@@ -47,7 +47,12 @@ jobs:
           envs: ACTIVE
           script: |
             cd /root/docker/composes/spacebox
-            printf 'ACTIVE=%s\n' "${ACTIVE:-true}" > .env
+            ACTIVE_VAL="${ACTIVE:-true}"
+            printf 'ACTIVE=%s\n' "$ACTIVE_VAL" > .env
+            echo "DEBUG ACTIVE length=${#ACTIVE_VAL}"
             docker compose pull
             docker compose up -d --force-recreate
+            sleep 2
+            echo "DEBUG entrypoint scripts:"; docker exec spacebox ls -1 /docker-entrypoint.d/ || true
+            echo "DEBUG active nginx config (head):"; docker exec spacebox head -8 /etc/nginx/conf.d/default.conf || true
             docker image prune -f
