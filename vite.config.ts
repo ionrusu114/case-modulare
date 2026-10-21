@@ -2,7 +2,9 @@ import { defineConfig, type Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 import { compression } from 'vite-plugin-compression2'
+import { readFileSync } from 'node:fs'
 import { fileURLToPath, URL } from 'node:url'
+import type { ViteSSGOptions } from 'vite-ssg'
 
 // Performance-first config:
 // - Tailwind v4 via official Vite plugin (no PostCSS pass)
@@ -51,6 +53,22 @@ function firstPaintFirst(): Plugin {
   }
 }
 
+// vite-ssg appends a <link rel="modulepreload"> for every chunk rendered during SSR (the lazily
+// hydrated sections) and a render-blocking <link rel="stylesheet"> for their CSS. Drop the preloads
+// (sections load their chunk on demand) and inline that CSS, as firstPaintFirst() does for the entry.
+const ssgOptions: Partial<ViteSSGOptions> = {
+  onPageRendered(_route, html) {
+    const out = html
+      .replace(/<link rel="modulepreload"[^>]*>/g, '')
+      .replace(/<link rel="stylesheet" href="\/(assets\/[^"]+\.css)">/g, (_tag, file: string) => {
+        const css = readFileSync(fileURLToPath(new URL(`./dist/${file}`, import.meta.url)), 'utf8')
+        return `<style>${css}</style>`
+      })
+    if (/<link rel="(stylesheet|modulepreload)"/.test(out)) throw new Error('ssg: a render-blocking <link> is left in the page')
+    return out
+  },
+}
+
 export default defineConfig({
   plugins: [
     vue(),
@@ -85,5 +103,6 @@ export default defineConfig({
     },
   },
   // vite-ssg
+  ssgOptions,
   ssr: { noExternal: ['gsap'] },
 })
