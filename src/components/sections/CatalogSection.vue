@@ -8,7 +8,7 @@ const root = ref<HTMLElement>()
 const items = computed(() => products.filter((p) => !p.featured))
 
 useGsapContext(() => {
-  revealOnScroll(root.value!, '.reveal', { y: 32, stagger: 0.08 })
+  revealOnScroll(root.value!, '.reveal', { y: 32 })
 }, root)
 </script>
 

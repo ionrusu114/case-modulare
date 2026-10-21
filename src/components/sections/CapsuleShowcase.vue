@@ -20,7 +20,7 @@ const features = [
 ]
 
 useGsapContext(({ gsap, reduced }) => {
-  revealOnScroll(root.value!, '.reveal', { y: 36, stagger: 0.08 })
+  revealOnScroll(root.value!, '.reveal', { y: 36 })
   if (reduced) return
   // Subtle parallax on the lead image.
   gsap.to('[data-parallax]', {

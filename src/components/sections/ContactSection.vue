@@ -16,7 +16,7 @@ function onSubmit() {
 }
 
 useGsapContext(() => {
-  revealOnScroll(root.value!, '.reveal', { y: 30, stagger: 0.08 })
+  revealOnScroll(root.value!, '.reveal', { y: 30 })
 }, root)
 </script>
 

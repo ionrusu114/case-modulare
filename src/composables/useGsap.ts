@@ -12,11 +12,20 @@ function loadGsap() {
   lib ??= Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
     gsap.registerPlugin(ScrollTrigger)
     loaded = gsap
-    // From here GSAP owns the `.reveal` elements (CSS hides them, each setup reveals them).
-    document.documentElement.classList.remove('no-js')
     return { gsap, ScrollTrigger }
   })
   return lib
+}
+
+// One ScrollTrigger.refresh per frame, however many sections finish their setup in it.
+let refreshQueued = false
+function queueRefresh(ScrollTrigger: ScrollTriggerStatic) {
+  if (refreshQueued) return
+  refreshQueued = true
+  requestAnimationFrame(() => {
+    refreshQueued = false
+    ScrollTrigger.refresh()
+  })
 }
 
 export const prefersReducedMotion = () =>
@@ -39,16 +48,18 @@ export function useGsapContext(
     try {
       mod = await loadGsap()
     } catch {
-      // Chunk failed to load: `no-js` stays on <html>, so reveal content stays visible.
+      // Chunk failed to load: the page simply stays static (reveal content starts visible).
       return
     }
+    // Each section's setup runs in its own task, so no single long task blocks the main thread.
+    await new Promise((resolve) => setTimeout(resolve))
     if (!alive) return
     const reduced = prefersReducedMotion()
     // Resolve the scope to a real element here (refs are empty during setup).
     const el = unref(scope) as HTMLElement | undefined
     ctx = mod.gsap.context(() => setup({ gsap: mod.gsap, reduced }), el)
     // ScrollTrigger needs a refresh once fonts/layout settle.
-    requestAnimationFrame(() => mod.ScrollTrigger.refresh())
+    queueRefresh(mod.ScrollTrigger)
   })
   onBeforeUnmount(() => {
     alive = false
@@ -56,35 +67,37 @@ export function useGsapContext(
   })
 }
 
-/** Standard staggered reveal for elements carrying the `.reveal` class. */
-export function revealOnScroll(
-  root: HTMLElement,
-  selector = '.reveal',
-  opts: { y?: number; stagger?: number; start?: string } = {},
-) {
+/**
+ * Run `cb` once per element when it enters the viewport, past the bottom `inset` (15% ≈ ScrollTrigger
+ * start 'top 85%'). IntersectionObserver also catches anchor jumps, which skip scroll positions.
+ */
+export function whenInView(els: Element[], cb: (el: Element) => void, inset = '15%') {
+  if (!els.length) return
+  let left = els.length
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue
+        io.unobserve(e.target)
+        cb(e.target)
+        if (--left === 0) io.disconnect()
+      }
+    },
+    { rootMargin: `0px 0px -${inset} 0px` },
+  )
+  els.forEach((el) => io.observe(el))
+}
+
+/** Standard entrance for elements carrying the `.reveal` class. */
+export function revealOnScroll(root: HTMLElement, selector = '.reveal', opts: { y?: number } = {}) {
   const gsap = loaded
-  const els = root.querySelectorAll<HTMLElement>(selector)
-  if (!gsap || !els.length) return
-  if (prefersReducedMotion()) {
-    gsap.set(els, { opacity: 1, y: 0 })
-    return
-  }
-  els.forEach((el) => {
-    // Already on screen (visitor scrolled before hydration): show as is, no hide-and-fade flash.
-    if (el.getBoundingClientRect().top < window.innerHeight) {
-      gsap.set(el, { opacity: 1 })
-      return
-    }
-    gsap.fromTo(
-      el,
-      { opacity: 0, y: opts.y ?? 32 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        ease: 'expo.out',
-        scrollTrigger: { trigger: el, start: opts.start ?? 'top 85%' },
-      },
-    )
-  })
+  if (!gsap || prefersReducedMotion()) return
+  // Only elements still below the fold get the hidden from-state: anything the visitor already
+  // sees (e.g. scrolled there before hydration) stays as is, no hide-and-fade flash.
+  const pending = [...root.querySelectorAll<HTMLElement>(selector)].filter(
+    (el) => el.getBoundingClientRect().top >= window.innerHeight,
+  )
+  if (!pending.length) return
+  gsap.set(pending, { opacity: 0, y: opts.y ?? 32 })
+  whenInView(pending, (el) => gsap.to(el, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out' }))
 }

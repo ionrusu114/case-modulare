@@ -13,7 +13,7 @@ const shots: { name: ImageName; alt: string; span: string; sizes: string }[] = [
 ]
 
 useGsapContext(() => {
-  revealOnScroll(root.value!, '.reveal', { y: 30, stagger: 0.07 })
+  revealOnScroll(root.value!, '.reveal', { y: 30 })
 }, root)
 </script>
 

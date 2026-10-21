@@ -84,17 +84,12 @@
     background: var(--color-ember);
     color: var(--color-ink);
   }
-  /* Hide content until GSAP reveal, but only when JS + motion are available */
-  .reveal {
-    opacity: 0;
-    will-change: transform, opacity;
-  }
+  /* .reveal content starts visible. revealOnScroll (useGsap) sets the hidden from-state only on
+     elements still below the fold once their section has hydrated, so nothing depends on JS to appear. */
   @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1 !important; transform: none !important; }
     html { scroll-behavior: auto; }
   }
-  /* SSR / no-JS fallback: never leave reveal content hidden */
-  .no-js .reveal { opacity: 1; }
 
   /* Content images are click-to-zoom (see TheLightbox); opt out with data-no-zoom. */
   main img:not([data-no-zoom]) { cursor: zoom-in; }

@@ -6,7 +6,7 @@ import { useGsapContext, revealOnScroll } from '@/composables/useGsap'
 const root = ref<HTMLElement>()
 
 useGsapContext(({ gsap, reduced }) => {
-  revealOnScroll(root.value!, '.reveal', { y: 32, stagger: 0.1 })
+  revealOnScroll(root.value!, '.reveal', { y: 32 })
   if (reduced) return
   gsap.fromTo(
     '[data-progress-line]',

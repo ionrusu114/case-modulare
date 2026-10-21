@@ -31,7 +31,8 @@ with **vite-ssg**. three.js is a dependency only for the unused `CapsuleHero.vue
   vite-ssg prerenders real HTML for instant first paint + SEO. The app hydrates **after window load**
   (see Performance rules), so `scrollBehavior` skips the first navigation (keeps the visitor's scroll).
   `src/App.vue` holds global `useHead` SEO (title template, OG/Twitter, Organization JSON-LD with phone + address).
-- **Page composition:** `Home.vue` stacks section components from `src/components/sections/` between
+- **Page composition:** `Home.vue` stacks section components (all but the hero via `defineAsyncComponent` +
+  `hydrateOnVisible`, so they hydrate and load their chunk only near the viewport) from `src/components/sections/` between
   `TheHeader` and `TheFooter`. Sections alternate dark (`ink`) and light (`cloud`/`mist`) backgrounds by design.
 - **Hero (performance-critical, LCP):** `HeroSection.vue` shows the photo `capsule-balcon` via `<AppPicture>`
   (eager, `fetchpriority="high"`). The entrance (kicker, headline lines, CTA) and the Ken Burns are **pure CSS
@@ -43,8 +44,8 @@ with **vite-ssg**. three.js is a dependency only for the unused `CapsuleHero.vue
 - **GSAP conventions:** all GSAP lives behind `src/composables/useGsap.ts`, which **imports GSAP lazily** after
   mount. Use `useGsapContext(({ gsap, reduced }) => ..., scope)` and take `gsap` from that argument (never import
   `gsap` directly); tweens/ScrollTriggers are auto-reverted on unmount. Use `revealOnScroll(root, '.reveal')` for the
-  standard staggered entrance. `<html class="no-js">` keeps `.reveal` visible until GSAP has loaded (useGsap removes
-  it). **Always honor `prefers-reduced-motion`**; reveal elements must never stay hidden.
+  standard staggered entrance. `.reveal` content starts visible; revealOnScroll hides only elements still below
+  the fold at setup (each setup runs in its own task; ScrollTrigger refreshes are batched per frame). **Always honor `prefers-reduced-motion`**; reveal elements must never stay hidden.
 - **Design system:** tokens are defined once in `src/style.css` via Tailwind v4 `@theme` (OKLCH colors,
   `--font-*`, fluid `--text-*` / `--spacing-section`). `DESIGN.md` is the spec; `PRODUCT.md` is brand/content
   context. Both are read by the `impeccable` skill, which **leads** all design decisions here.

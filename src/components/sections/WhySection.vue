@@ -1,26 +1,32 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { usps } from '@/data/catalog'
-import { useGsapContext, revealOnScroll } from '@/composables/useGsap'
+import { useGsapContext, revealOnScroll, whenInView } from '@/composables/useGsap'
 
 const root = ref<HTMLElement>()
 
 useGsapContext(({ gsap, reduced }) => {
-  revealOnScroll(root.value!, '.reveal', { y: 36, stagger: 0.1 })
+  revealOnScroll(root.value!, '.reveal', { y: 36 })
   if (reduced) return
-  // Count up each metric on enter. The prerendered HTML holds the real value (no-JS, reduced motion).
-  root.value!.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
-    const target = Number(el.dataset.count)
-    const obj = { v: 0 }
-    el.textContent = '0'
-    gsap.to(obj, {
-      v: target,
-      duration: 1.6,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 88%' },
-      onUpdate: () => { el.textContent = String(Math.round(obj.v)) },
-    })
-  })
+  // Count up each metric on enter. The prerendered HTML holds the real value (no-JS, reduced motion,
+  // or already on screen when the section hydrates), so only metrics still below the fold restart at 0.
+  const counters = [...root.value!.querySelectorAll<HTMLElement>('[data-count]')].filter(
+    (el) => el.getBoundingClientRect().top >= window.innerHeight,
+  )
+  counters.forEach((el) => (el.textContent = '0'))
+  whenInView(
+    counters,
+    (el) => {
+      const obj = { v: 0 }
+      gsap.to(obj, {
+        v: Number((el as HTMLElement).dataset.count),
+        duration: 1.6,
+        ease: 'power3.out',
+        onUpdate: () => { el.textContent = String(Math.round(obj.v)) },
+      })
+    },
+    '12%',
+  )
 }, root)
 </script>
 

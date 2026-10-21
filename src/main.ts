@@ -5,8 +5,8 @@ import Home from './pages/Home.vue'
 import './style.css'
 
 // Single-route landing. vite-ssg prerenders it to static HTML for instant
-// first paint + SEO; the app hydrates after window load (see vite.config.ts).
-// The `no-js` class (reveal content visible) is dropped by useGsap once GSAP is live.
+// first paint + SEO; the app hydrates after window load (see vite.config.ts) and the
+// below-the-fold sections only when they approach the viewport (see Home.vue).
 export const createApp = ViteSSG(App, {
   routes: [{ path: '/', name: 'home', component: Home }],
   scrollBehavior: (to, from) => {
