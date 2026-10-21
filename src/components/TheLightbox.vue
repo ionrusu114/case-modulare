@@ -11,7 +11,7 @@ function onDocClick(e: MouseEvent) {
   const img = (e.target as HTMLElement)?.closest('img') as HTMLImageElement | null
   if (!img || !img.closest('main') || img.dataset.noZoom !== undefined) return
   e.preventDefault()
-  openLightbox(img.currentSrc || img.src, img.alt)
+  openLightbox(img.dataset.full || img.currentSrc || img.src, img.alt)
 }
 function onKey(e: KeyboardEvent) {
   if (e.key === 'Escape' && lightbox.value) closeLightbox()

@@ -1,3 +1,5 @@
+import type { ImageName } from '@/data/images'
+
 export interface Spec {
   label: string
   value: string
@@ -8,7 +10,7 @@ export interface Product {
   name: string
   kind: string
   blurb: string
-  image: string
+  image: ImageName
   alt: string
   specs: Spec[]
   featured?: boolean
@@ -22,7 +24,7 @@ export const products: Product[] = [
     kind: 'Locuire premium',
     blurb:
       'Carcasă albă cu forme rotunjite, ferestre angulare cu rame negre și interior cald. Living și dormitor, gata de locuit. Disponibilă cu sau fără balcon.',
-    image: '/renders/capsule-hero.png',
+    image: 'capsule-balcon',
     alt: 'Capsulă modulară premium albă cu ferestre mari fumurii, amplasată pe o pajiște la apus',
     featured: true,
     specs: [
@@ -38,7 +40,7 @@ export const products: Product[] = [
     kind: 'Birou · cazare · locuire',
     blurb:
       'Panouri sandwich pe structură metalică, tâmplărie PVC termopan, aer condiționat. Configurabil ca birou de șantier, dormitor sau spațiu de locuit.',
-    image: '/gallery/container-exterior.jpeg',
+    image: 'container-exterior',
     alt: 'Container modular locuibil gri deschis cu două ferestre și ușă centrală',
     specs: [
       { label: 'Structură', value: 'Metalică' },
@@ -53,7 +55,7 @@ export const products: Product[] = [
     kind: 'Birou · showroom · HoReCa',
     blurb:
       'Fațadă integral vitrată cu uși glisante, scară exterioară și terasă pe acoperiș cu balustradă. Pentru spații comerciale care vor să fie văzute.',
-    image: '/gallery/doua-niveluri.jpeg',
+    image: 'doua-niveluri',
     alt: 'Container modular pe două niveluri, gri antracit, cu fațadă vitrată și terasă pe acoperiș',
     specs: [
       { label: 'Niveluri', value: '2' },
@@ -68,28 +70,13 @@ export const products: Product[] = [
     kind: 'Container modular 6×3 m',
     blurb:
       'Chioșc comercial complet echipat: panouri sandwich, iluminat LED interior și exterior, aer condiționat și două ferestre de vânzare cu deschidere în sus și blat de servire.',
-    image: '/gallery/chiosc.jpeg',
+    image: 'chiosc',
     alt: 'Chioșc modular antracit pentru fructe și legume, cu ferestre de vânzare deschise și rafturi iluminate',
     specs: [
       { label: 'Dimensiuni', value: '6.00 × 3.00 × 2.60 m' },
       { label: 'Culoare', value: 'Antracit (RAL 7016)' },
       { label: 'Ferestre vânzare', value: '2, deschidere sus' },
       { label: 'Dotări', value: 'LED + aer condiționat' },
-    ],
-  },
-  {
-    id: 'punct-paza',
-    name: 'Punct de Pază Modular',
-    kind: 'Container 3.00 × 2.40 m',
-    blurb:
-      'Cabină de pază robustă: structură din oțel galvanizat, izolație din vată minerală, finisaj interior gips-carton cu vopsea lavabilă. Execuție de la 15 zile.',
-    image: '/gallery/punct-paza.jpeg',
-    alt: 'Punct de pază modular gri cu uși duble vitrate și ferestre laterale',
-    specs: [
-      { label: 'Suprafață utilă', value: '7.20 m²' },
-      { label: 'Structură', value: 'Oțel galvanizat' },
-      { label: 'Izolație', value: 'Vată minerală 50 mm' },
-      { label: 'Culori', value: 'RAL 7035 / 7016' },
     ],
   },
 ]

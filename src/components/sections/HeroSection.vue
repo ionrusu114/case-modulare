@@ -1,27 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useGsapContext, gsap } from '@/composables/useGsap'
+import AppPicture from '@/components/AppPicture.vue'
+import { useGsapContext } from '@/composables/useGsap'
 
 // Editorial hero: the capsule lives in its OWN cinematic plate, the copy sits on the ink
 // stage below it. No text over the house on any screen. The full 11.5 m capsule reads whole
 // because the plate keeps the photo's 16:9 framing (mobile) / a wide cine-crop (desktop).
+// The entrance + Ken Burns are pure CSS (see <style>), so the hero paints and animates
+// without waiting for JS; GSAP only adds the scroll parallax once it has loaded.
 const root = ref<HTMLElement>()
-const heroSrc = '/gallery/capsule-balcon.jpeg'
 
-useGsapContext(({ reduced }) => {
-  const tl = gsap.timeline({ defaults: { ease: 'expo.out' } })
-  tl.from('[data-hero-plate]', { opacity: 0, duration: 1.1, ease: 'power2.out' })
-    .from('[data-hero-kicker]', { y: 20, opacity: 0, duration: 0.7 }, '-=0.5')
-    .from('[data-hero-line]', { yPercent: 110, opacity: 0, duration: 1, stagger: 0.12 }, '-=0.35')
-    .from('[data-hero-sub]', { y: 18, opacity: 0, duration: 0.8 }, '-=0.55')
-    .from('[data-hero-cta]', { y: 16, opacity: 0, duration: 0.7, stagger: 0.08 }, '-=0.5')
-    .from('[data-hero-meta]', { opacity: 0, duration: 0.8 }, '-=0.4')
-
+useGsapContext(({ gsap, reduced }) => {
   if (reduced) return
-
-  // Ken Burns settles to a slight overscan (1.04) so the plate stays full-bleed under parallax.
-  gsap.fromTo('[data-hero-img]', { scale: 1.1 }, { scale: 1.04, duration: 2.8, ease: 'power2.out' })
-
   // Parallax: the capsule drifts gently inside its plate as the hero scrolls away.
   gsap.fromTo(
     '[data-hero-img]',
@@ -57,14 +47,15 @@ useGsapContext(({ reduced }) => {
       data-hero-plate
       class="relative w-full overflow-hidden aspect-[16/9] lg:aspect-auto lg:h-[58vh] xl:h-[62vh]"
     >
-      <img
-        data-hero-img
-        :src="heroSrc"
+      <AppPicture
+        name="capsule-balcon"
         alt="Capsulă modulară premium 11.5 m, carcasă albă cu balcon și interior cald vizibil prin sticla fumurie, amplasată pe deal"
-        class="h-full w-full object-cover object-center will-change-transform"
+        sizes="100vw"
+        loading="eager"
         fetchpriority="high"
-        decoding="async"
+        data-hero-img
         data-no-zoom
+        class="h-full w-full object-cover object-center will-change-transform"
       />
       <!-- Soft falloff that dissolves the plate's lower edge into the ink stage. -->
       <div
@@ -93,8 +84,8 @@ useGsapContext(({ reduced }) => {
           class="font-display text-cloud lg:col-span-7"
           style="font-size: var(--text-hero); line-height: var(--text-hero--line-height); letter-spacing: var(--text-hero--letter-spacing)"
         >
-          <span class="block overflow-hidden"><span data-hero-line class="block">Spațiul tău,</span></span>
-          <span class="block overflow-hidden"><span data-hero-line class="block">gata de locuit.</span></span>
+          <span class="block overflow-hidden"><span data-hero-line class="block" style="--d: 0.15s">Spațiul tău,</span></span>
+          <span class="block overflow-hidden"><span data-hero-line class="block" style="--d: 0.27s">gata de locuit.</span></span>
         </h1>
         <div class="lg:col-span-5">
           <p data-hero-sub class="measure mt-6 text-lg text-cloud/70 lg:mt-0">
@@ -102,8 +93,8 @@ useGsapContext(({ reduced }) => {
             terenul tău. Inginerie reală, finisaje la cheie, fără șantier interminabil.
           </p>
           <div class="mt-8 flex flex-wrap items-center gap-4">
-            <a data-hero-cta href="#contact" class="btn-primary">Cere ofertă</a>
-            <a data-hero-cta href="#capsula" class="btn-ghost">Vezi capsula 11.5 m</a>
+            <a data-hero-cta href="#contact" class="btn-primary" style="--d: 0.55s">Cere ofertă</a>
+            <a data-hero-cta href="#capsula" class="btn-ghost" style="--d: 0.62s">Vezi capsula 11.5 m</a>
           </div>
         </div>
       </div>
@@ -111,7 +102,53 @@ useGsapContext(({ reduced }) => {
 
     <!-- Scroll hint -->
     <div class="container-x pointer-events-none relative z-10 flex justify-end pb-6">
-      <span class="text-spec hidden text-xs text-cloud/45 sm:inline">derulează pentru detalii ↓</span>
+      <span class="text-spec hidden text-xs text-cloud/60 sm:inline">derulează pentru detalii ↓</span>
     </div>
   </section>
 </template>
+
+<style scoped>
+/* CSS entrance (expo-out, matches the old GSAP timeline). Runs from first paint, no JS needed.
+   fill-mode backwards: hidden during the delay, then plain styles again (hover transforms keep working). */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(1.1rem); }
+}
+@keyframes hero-line {
+  from { opacity: 0; transform: translateY(110%); }
+}
+@keyframes hero-fade {
+  from { opacity: 0; }
+}
+/* Ken Burns on the individual `scale` property, so it composes with GSAP's parallax transform. */
+@keyframes hero-kenburns {
+  from { scale: 1.1; }
+}
+[data-hero-kicker],
+[data-hero-sub],
+[data-hero-cta] {
+  animation: hero-rise 0.7s var(--ease-out-expo) var(--d, 0s) backwards;
+}
+[data-hero-kicker] { --d: 0.1s; }
+[data-hero-sub] { --d: 0.45s; }
+[data-hero-line] {
+  animation: hero-line 0.9s var(--ease-out-expo) var(--d, 0s) backwards;
+}
+[data-hero-meta] {
+  animation: hero-fade 0.6s ease-out 0.7s backwards;
+}
+/* The picture's <img> is rendered by AppPicture, outside this component's scope. */
+:deep([data-hero-img]) {
+  scale: 1.04;
+  animation: hero-kenburns 2.8s cubic-bezier(0.33, 1, 0.68, 1) backwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-hero-kicker],
+  [data-hero-sub],
+  [data-hero-cta],
+  [data-hero-line],
+  [data-hero-meta],
+  :deep([data-hero-img]) {
+    animation: none;
+  }
+}
+</style>

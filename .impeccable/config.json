@@ -1,0 +1,38 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/components/AppPicture.vue"
+        ],
+        "createdAt": "2026-10-21T11:49:03.444Z",
+        "reason": "Claude: src is a bound :src from the generated image manifest, not empty"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/components/TheLightbox.vue"
+        ],
+        "createdAt": "2026-10-21T11:49:03.789Z",
+        "reason": "Claude: flagged line is a code comment mentioning <img>, lightbox img uses bound :src"
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "createdAt": "2026-10-21T12:30:14.630Z",
+        "reason": "Claude: existing SpaceBox logo wordmark font (2026-06 rebrand, DESIGN tokens); this change only self-hosts it"
+      },
+      {
+        "rule": "overused-font",
+        "value": "geist mono",
+        "createdAt": "2026-10-21T12:30:15.106Z",
+        "reason": "Claude: DESIGN.md specifies Geist Mono for spec/data text; this change only self-hosts it"
+      }
+    ]
+  }
+}

@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project
 
 **SpaceBox** — a Romanian, performance-first **3D landing page** for modular houses (case modulare):
-premium capsules, living containers, two-storey units, commercial kiosks, guard posts. The site is a
+premium capsules, living containers, two-storey units, commercial kiosks (guard posts were dropped). The site is a
 single long-scroll presentation page. Content language is **Romanian**; the source of truth for product
 copy/specs is the imagery in `example_images/` (distilled into `src/data/catalog.ts`).
 
@@ -24,55 +24,53 @@ Chrome via the `playwright-cli` skill — do not add `.spec` files unless asked)
 
 ## Architecture
 
-Stack: **Vue 3.5 (`<script setup lang="ts">`) + Vite 6 + TypeScript + Tailwind CSS v4 + GSAP + three.js**,
-prerendered with **vite-ssg**. three.js is loaded **only client-side, lazily** (the hero capsule and the
-product configurator) — never in the SSR/first-paint path.
+Stack: **Vue 3.5 (`<script setup lang="ts">`) + Vite 6 + TypeScript + Tailwind CSS v4 + GSAP**, prerendered
+with **vite-ssg**. three.js is a dependency only for the unused `CapsuleHero.vue`; nothing on the page loads it.
 
 - **Entry / routing:** `src/main.ts` uses `ViteSSG` with a single `/` route (`src/pages/Home.vue`).
-  vite-ssg prerenders real HTML for instant first paint + SEO; the WebGL hero hydrates client-side only.
-  `src/App.vue` holds global `useHead` SEO (title template, OG/Twitter, Organization JSON-LD).
+  vite-ssg prerenders real HTML for instant first paint + SEO. The app hydrates **after window load**
+  (see Performance rules), so `scrollBehavior` skips the first navigation (keeps the visitor's scroll).
+  `src/App.vue` holds global `useHead` SEO (title template, OG/Twitter, Organization JSON-LD with phone + address).
 - **Page composition:** `Home.vue` stacks section components from `src/components/sections/` between
   `TheHeader` and `TheFooter`. Sections alternate dark (`ink`) and light (`cloud`/`mist`) backgrounds by design.
-- **Hero (performance-critical):**
-  - `src/components/sections/HeroSection.vue` mounts `src/components/three/CapsuleHero.vue` **client-only**
-    (`defineAsyncComponent` + `mounted` ref) and shows `/renders/capsule-hero.jpg` (~190KB) as poster until
-    `@ready` (also the SSR/no-JS fallback).
-  - `CapsuleHero.vue` is **raw three.js** (no TresJS). It loads `/models/capsule.glb` (exported from Blender,
-    35 named parts), lights it with a built-in `RoomEnvironment` + key/rim/warm-interior lights on a
-    **transparent** canvas (clean dark studio, no exterior ambient — materials read), and **explodes it on
-    scroll**: each part gets a radial `dir` (roof up, base down, glass/frames forward, interior spreads, shell
-    stays as core); GSAP pins the hero and writes scroll progress to `heroProgress`
-    (`src/composables/useHeroProgress.ts`), the render loop sets each `part.position = base + dir * progress`
-    and dollies the camera back as it opens. Assembled at top → exploded diagram as you scroll. `prefers-reduced-motion` skips the pin.
-- **Product configurator** (`/produs/punct-de-paza`): `src/pages/ProductPunctPaza.vue` + `src/components/three/GuardPostViewer.vue`
-  — raw three.js. Loads `/models/punct-paza.glb` (detailed Blender guard post, 35 named parts, two-tone).
-  Live **RAL color swap** recolors the material named exactly **`Body`** (light-grey panels; trim stays anthracite).
-  **Hotspots** map to named meshes (Door, Window_Front_L, Interior_AC, Corner, Body_Left/Back, Interior_Desk),
-  projected to HTML markers with raycast occlusion. **Interior view is fixed/rotate-only**: OrbitControls radius
-  is locked (minDistance == maxDistance) with pan + zoom disabled, so you rotate around the room centre but
-  never translate. Exterior = normal orbit (door faces −Z after the glTF Y-up flip → camera sits on −Z).
-  Data in `src/data/punctPaza.ts`. Linked from the catalog card.
-  - The turntable + poster are produced offline in Blender (Cycles + Poly Haven HDRI) by the
-    **blender-modeler** agent. To refresh the hero, re-render those two files; no code change needed.
-- **GSAP conventions:** all GSAP lives behind `src/composables/useGsap.ts`. Use `useGsapContext(setup, scope)`
-  so tweens/ScrollTriggers are auto-reverted on unmount; use `revealOnScroll(root, '.reveal')` for the
-  standard staggered entrance. **Always honor `prefers-reduced-motion`** (the composable exposes
-  `prefersReducedMotion()` and `reduced` in the setup callback; reveal elements must never stay hidden).
+- **Hero (performance-critical, LCP):** `HeroSection.vue` shows the photo `capsule-balcon` via `<AppPicture>`
+  (eager, `fetchpriority="high"`). The entrance (kicker, headline lines, CTA) and the Ken Burns are **pure CSS
+  keyframes** (`fill-mode: backwards`, Ken Burns on the individual `scale` property), so they run from first paint
+  without JS; GSAP only adds the scroll parallax on `transform`. Never hide the hero image with opacity.
+- **Old 3D hero (unused):** `src/components/three/CapsuleHero.vue` (raw three.js, `/models/capsule.glb`, explode on
+  scroll via `heroProgress`) is kept but not mounted anywhere. The guard post configurator was removed;
+  `/produs/punct-de-paza` 301-redirects to `/` in `nginx.conf`.
+- **GSAP conventions:** all GSAP lives behind `src/composables/useGsap.ts`, which **imports GSAP lazily** after
+  mount. Use `useGsapContext(({ gsap, reduced }) => ..., scope)` and take `gsap` from that argument (never import
+  `gsap` directly); tweens/ScrollTriggers are auto-reverted on unmount. Use `revealOnScroll(root, '.reveal')` for the
+  standard staggered entrance. `<html class="no-js">` keeps `.reveal` visible until GSAP has loaded (useGsap removes
+  it). **Always honor `prefers-reduced-motion`**; reveal elements must never stay hidden.
 - **Design system:** tokens are defined once in `src/style.css` via Tailwind v4 `@theme` (OKLCH colors,
   `--font-*`, fluid `--text-*` / `--spacing-section`). `DESIGN.md` is the spec; `PRODUCT.md` is brand/content
   context. Both are read by the `impeccable` skill, which **leads** all design decisions here.
-- **Content:** `src/data/catalog.ts` is the single typed source for products, USP stats, and process steps.
+- **Content:** `src/data/catalog.ts` is the single typed source for products, USP stats, and process steps;
+  `src/data/contact.ts` for phone, email, address, map coordinates and map links.
   Spec values (dimensions, RAL codes) are quoted verbatim from `example_images/`. Edit data there, not in markup.
-- **Assets:** curated photos live in `public/gallery/`; the Blender product render in `public/renders/`;
-  the web GLB in `public/models/`. Originals stay in `example_images/` (not shipped).
+- **Assets:** curated photos live in `public/gallery/` (originals). Render them only through
+  `src/components/AppPicture.vue` (AVIF/WebP `srcset` from `public/img/`, typed by `src/data/images.ts`). After adding
+  or changing a photo, run `npm i --no-save sharp@0.34 && node scripts/optimize-images.mjs` (sharp is not a project
+  dependency). The contact map `public/img/harta-*` is a static, pre-styled OpenStreetMap render centred on the
+  address (keep the © OpenStreetMap credit). Originals stay in `example_images/` (not shipped).
 
 ## Performance rules (this project's reason for existing)
 
-- `three` and `gsap` are each split into their own chunk (`vite.config.ts` `manualChunks`). three loads
-  only via the client-only async components, so first paint is just HTML + poster — keep it that way.
-- Build output is brotli + gzip precompressed (`vite-plugin-compression2`). Keep `capsule.glb` light
-  (no Draco needed at ~205KB) and always provide the poster.
-- Prefer real imagery already in `public/`; lazy-load all non-hero images (`loading="lazy"`).
+Target: **100** in all four PageSpeed categories, mobile and desktop. Check with
+`npx lighthouse@12 <url>` (mobile) and `--preset=desktop`. Production is HTTP/2 behind Traefik; plain
+`http://localhost` is HTTP/1.1 and makes Lighthouse's simulated LCP look ~0.3s worse, so test locally through an
+nginx with TLS + `http2 on` (self-signed cert, `--chrome-flags="--ignore-certificate-errors"`). The anonymous
+PageSpeed Insights API quota is often exhausted (HTTP 429); use pagespeed.web.dev in a browser instead.
+- First paint needs only HTML + hero image + fonts. `firstPaintFirst()` in `vite.config.ts` inlines the CSS as
+  `<style>` and injects the entry module **after window load** (`modulePreload: false`). Do not add
+  render-blocking `<link>`/`<script>` tags or third-party embeds to `<head>`.
+- Fonts are self-hosted variable woff2 in `public/fonts/`, subset to Romanian Latin (Space Grotesk holds only
+  the logo glyphs "SpaceBox."). No Google Fonts. Rename a font file when it changes (cached 1 year).
+- GSAP is a lazy chunk; keep heavy libraries (three, maps, embeds) out of the initial graph.
+- Build output is brotli + gzip precompressed (`vite-plugin-compression2`). Lazy-load all non-hero images.
 
 ## 3D / Blender pipeline
 

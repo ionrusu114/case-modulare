@@ -1,7 +1,7 @@
 # SpaceBox — Case Modulare
 
-Landing page 3D pentru case modulare (capsule premium, containere, chioșcuri, puncte de pază).
-Hero 3D interactiv (WebGL) cu explode pe scroll, configurator de produs (rotire, interior, schimbare culoare RAL), galerie cu lightbox, SEO + prerender.
+Landing page pentru case modulare (capsule premium, containere, chioșcuri).
+Hero foto cu intrare animată în CSS, galerie cu lightbox, hartă de contact, SEO + prerender. Țintă: 100 în PageSpeed (mobil + desktop).
 
 **Live:** https://spacebox.md
 
@@ -18,9 +18,11 @@ bun run typecheck
 ```
 
 ## Structură
-- `src/components/three/` — scene WebGL (CapsuleHero = explode pe scroll; GuardPostViewer = configurator).
-- `src/components/sections/` — secțiunile landing-ului. `src/pages/` — rute (Home, ProductPunctPaza).
-- `src/data/` — conținut tipizat (catalog, specificații). `public/models/` — GLB-uri. `public/gallery|renders/` — imagini.
+- `src/components/sections/` — secțiunile landing-ului. `src/pages/Home.vue` — singura rută.
+- `src/components/AppPicture.vue` — `<picture>` AVIF/WebP responsive pentru fotografiile din `public/gallery/`.
+- `src/data/` — conținut tipizat (catalog, contact, manifest imagini). `public/fonts/` — fonturi subset, găzduite local.
+- `public/gallery/` — fotografii originale; `public/img/` — variante generate (`npm i --no-save sharp@0.34 && node scripts/optimize-images.mjs`) + harta statică.
+- `src/components/three/CapsuleHero.vue` — scena WebGL veche (explode pe scroll), nefolosită în pagină.
 - `.blender/` *(gitignored)* — fișiere Blender + unelte 3D AI (istoric local, conține cheia API).
 
 ## Mediu (env)

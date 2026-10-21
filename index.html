@@ -1,21 +1,20 @@
 <!doctype html>
-<html lang="ro" class="scroll-smooth no-js">
+<html lang="ro" class="scroll-smooth scroll-pt-20 no-js">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#0a0a0a" />
-    <!-- Preconnect for fonts (Google Fonts) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;700&family=Hanken+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Self-hosted fonts (see @font-face in src/style.css). All four appear above the fold (logo,
+         kicker, headline, body); preloading them avoids a request chain behind the first layout. -->
+    <link rel="preload" href="/fonts/sora.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/geist-mono.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin />
     <title>SpaceBox — Case Modulare Premium | Capsule, Containere & Spații Modulare</title>
     <meta
       name="description"
-      content="SpaceBox proiectează și livrează case modulare premium: capsule de 11.5 m, containere locuibile, chioșcuri și puncte de pază. Structură din oțel galvanizat, izolație performantă, montaj în 15–20 de zile."
+      content="SpaceBox proiectează și livrează case modulare premium: capsule de 11.5 m, containere locuibile și chioșcuri comerciale. Structură din oțel galvanizat, izolație performantă, montaj de la 15 zile."
     />
   </head>
   <body class="bg-ink text-cloud antialiased">

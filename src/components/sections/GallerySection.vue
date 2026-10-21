@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import AppPicture from '@/components/AppPicture.vue'
+import type { ImageName } from '@/data/images'
 import { useGsapContext, revealOnScroll } from '@/composables/useGsap'
 
 const root = ref<HTMLElement>()
-const shots = [
-  { src: '/gallery/container-ac.jpeg', alt: 'Container modular gri cu unitate de aer condiționat montată exterior', span: 'sm:col-span-2 sm:row-span-2' },
-  { src: '/gallery/interior-dormitor.jpeg', alt: 'Interior container amenajat ca dormitor cu paturi suprapuse', span: '' },
-  { src: '/gallery/interior-bucatarie.jpeg', alt: 'Chicinetă modulară cu mobilier din lemn, blat negru și aer condiționat', span: '' },
-  { src: '/gallery/container-exterior.jpeg', alt: 'Container modular locuibil gri deschis cu ferestre și ușă centrală', span: 'sm:col-span-2' },
-  { src: '/gallery/punct-paza.jpeg', alt: 'Fișă de produs pentru punctul de pază modular cu specificații tehnice', span: '' },
+const shots: { name: ImageName; alt: string; span: string; sizes: string }[] = [
+  { name: 'container-ac', alt: 'Container modular gri cu unitate de aer condiționat montată exterior', span: 'sm:col-span-2 sm:row-span-2', sizes: '50vw' },
+  { name: 'interior-dormitor', alt: 'Interior container amenajat ca dormitor cu paturi suprapuse', span: '', sizes: '(min-width: 640px) 25vw, 50vw' },
+  { name: 'interior-bucatarie', alt: 'Chicinetă modulară cu mobilier din lemn, blat negru și aer condiționat', span: '', sizes: '(min-width: 640px) 25vw, 50vw' },
+  { name: 'container-exterior', alt: 'Container modular locuibil gri deschis cu ferestre și ușă centrală', span: 'sm:col-span-2', sizes: '50vw' },
 ]
 
 useGsapContext(() => {
@@ -36,11 +37,11 @@ useGsapContext(() => {
           class="reveal group relative overflow-hidden rounded-2xl"
           :class="s.span"
         >
-          <img
-            :src="s.src"
+          <AppPicture
+            :name="s.name"
             :alt="s.alt"
+            :sizes="s.sizes"
             class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-            loading="lazy"
           />
         </figure>
       </div>

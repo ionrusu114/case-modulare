@@ -21,7 +21,7 @@ const year = new Date().getFullYear()
         <a href="#contact" class="transition-colors hover:text-cloud">Contact</a>
       </nav>
     </div>
-    <div class="container-x border-t border-graphite/40 py-6 text-xs text-cloud/40">
+    <div class="container-x border-t border-graphite/40 py-6 text-xs text-cloud/60">
       © {{ year }} SpaceBox. Toate drepturile rezervate.
     </div>
   </footer>

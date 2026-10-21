@@ -40,3 +40,6 @@ textures/
 
 # ───────── Source material (reference images/video — not shipped; app uses public/) ─────────
 example_images/
+
+# Impeccable design-hook runtime cache (config.json is shared)
+.impeccable/hook.cache.json

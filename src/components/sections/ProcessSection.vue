@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { processSteps } from '@/data/catalog'
-import { useGsapContext, gsap, revealOnScroll } from '@/composables/useGsap'
+import { useGsapContext, revealOnScroll } from '@/composables/useGsap'
 
 const root = ref<HTMLElement>()
 
-useGsapContext(({ reduced }) => {
+useGsapContext(({ gsap, reduced }) => {
   revealOnScroll(root.value!, '.reveal', { y: 32, stagger: 0.1 })
   if (reduced) return
   gsap.fromTo(

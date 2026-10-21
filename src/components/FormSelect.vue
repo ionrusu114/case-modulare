@@ -49,9 +49,9 @@ function onKey(e: KeyboardEvent) {
       @click="toggle"
       @keydown="onKey"
     >
-      <span :class="modelValue ? 'text-cloud' : 'text-cloud/40'">{{ modelValue || 'Alege un model' }}</span>
+      <span :class="modelValue ? 'text-cloud' : 'text-cloud/60'">{{ modelValue || 'Alege un model' }}</span>
       <svg
-        class="ml-3 shrink-0 text-cloud/45 transition-transform duration-300"
+        class="ml-3 shrink-0 text-cloud/60 transition-transform duration-300"
         :class="open ? 'rotate-180 text-ember' : ''"
         width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
       >

@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { usps } from '@/data/catalog'
-import { useGsapContext, gsap, revealOnScroll } from '@/composables/useGsap'
+import { useGsapContext, revealOnScroll } from '@/composables/useGsap'
 
 const root = ref<HTMLElement>()
 
-useGsapContext(({ reduced }) => {
+useGsapContext(({ gsap, reduced }) => {
   revealOnScroll(root.value!, '.reveal', { y: 36, stagger: 0.1 })
   if (reduced) return
-  // Count up each metric on enter.
+  // Count up each metric on enter. The prerendered HTML holds the real value (no-JS, reduced motion).
   root.value!.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
     const target = Number(el.dataset.count)
     const obj = { v: 0 }
+    el.textContent = '0'
     gsap.to(obj, {
       v: target,
       duration: 1.6,
@@ -41,7 +42,7 @@ useGsapContext(({ reduced }) => {
         <article v-for="u in usps" :key="u.title" class="reveal bg-ink p-8 sm:p-10">
           <div class="flex items-baseline gap-1 font-display text-cloud">
             <span v-if="u.prefix" class="text-spec mr-0.5 self-center text-base font-normal text-cloud/55">{{ u.prefix }}</span>
-            <span :data-count="u.metric" class="text-6xl font-extrabold tracking-tight">0</span>
+            <span :data-count="u.metric" class="text-6xl font-extrabold tracking-tight">{{ u.metric }}</span>
             <span class="text-spec text-xl text-ember">{{ u.unit }}</span>
           </div>
           <h3 class="mt-5 font-display text-h3 text-cloud">{{ u.title }}</h3>

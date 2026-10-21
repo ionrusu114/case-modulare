@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { useHead } from '@unhead/vue'
 import TheLightbox from '@/components/TheLightbox.vue'
+import { contact } from '@/data/contact'
 
 const siteUrl = 'https://spacebox.md'
 const title = 'SpaceBox — Case Modulare Premium | Capsule, Containere & Spații Modulare'
 const description =
-  'SpaceBox proiectează și livrează case modulare premium: capsule de 11.5 m, containere locuibile, chioșcuri și puncte de pază. Structură din oțel galvanizat, izolație performantă, montaj de la 15 zile.'
+  'SpaceBox proiectează și livrează case modulare premium: capsule de 11.5 m, containere locuibile și chioșcuri comerciale. Structură din oțel galvanizat, izolație performantă, montaj de la 15 zile.'
 const ogImage = `${siteUrl}/renders/capsule-hero.jpg`
 const ogImageAlt = 'Capsulă modulară premium SpaceBox de 11.5 m cu balcon, amplasată pe deal'
 
@@ -42,7 +43,14 @@ useHead({
         url: siteUrl,
         logo: `${siteUrl}/favicon.svg`,
         image: ogImage,
-        email: 'contact@spacebox.md',
+        email: contact.email,
+        telephone: contact.phone.replace(/ /g, ''),
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: contact.street,
+          addressLocality: contact.city,
+          addressCountry: contact.country,
+        },
         areaServed: ['RO', 'MD'],
         makesOffer: {
           '@type': 'Offer',

@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import AppPicture from '@/components/AppPicture.vue'
 import { products } from '@/data/catalog'
 import { useGsapContext, revealOnScroll } from '@/composables/useGsap'
-
-// Products that have a dedicated interactive page.
-const routed: Record<string, string> = { 'punct-paza': '/produs/punct-de-paza' }
 
 const root = ref<HTMLElement>()
 const items = computed(() => products.filter((p) => !p.featured))
@@ -26,7 +23,7 @@ useGsapContext(() => {
           </h2>
         </div>
         <p class="reveal measure text-ink/60 sm:text-right">
-          De la cazare și birouri de șantier la chioșcuri comerciale și puncte de pază. Toate, cu
+          De la cazare și birouri de șantier la chioșcuri comerciale. Toate, cu
           aceeași calitate de fabricație.
         </p>
       </div>
@@ -38,13 +35,12 @@ useGsapContext(() => {
           class="reveal group flex flex-col overflow-hidden rounded-2xl border border-ink/8 bg-cloud transition-shadow duration-500 hover:shadow-[0_30px_60px_-30px_oklch(0.16_0.006_80/0.45)]"
         >
           <div class="aspect-[4/3] overflow-hidden">
-            <img
-              :src="p.image"
+            <AppPicture
+              :name="p.image"
+              crop="card"
               :alt="p.alt"
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              loading="lazy"
-              width="800"
-              height="600"
             />
           </div>
           <div class="flex flex-1 flex-col p-6">
@@ -54,20 +50,12 @@ useGsapContext(() => {
 
             <dl class="mt-5 grid grid-cols-2 gap-x-5 gap-y-3 border-t border-ink/8 pt-5">
               <div v-for="s in p.specs" :key="s.label">
-                <dt class="text-[0.7rem] uppercase tracking-wide text-ink/40">{{ s.label }}</dt>
+                <dt class="text-[0.7rem] uppercase tracking-wide text-ink/60">{{ s.label }}</dt>
                 <dd class="text-spec mt-0.5 text-sm font-medium text-ink">{{ s.value }}</dd>
               </div>
             </dl>
 
-            <RouterLink
-              v-if="routed[p.id]"
-              :to="routed[p.id]"
-              class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ember-deep transition-colors hover:text-ink"
-            >
-              Configurează 3D
-              <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </RouterLink>
-            <a v-else href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ink transition-colors hover:text-ember-deep">
+            <a href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-ink transition-colors hover:text-ember-deep">
               Cere ofertă
               <span class="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </a>

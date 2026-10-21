@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useGsapContext, gsap, revealOnScroll } from '@/composables/useGsap'
+import AppPicture from '@/components/AppPicture.vue'
+import { useGsapContext, revealOnScroll } from '@/composables/useGsap'
 
 const root = ref<HTMLElement>()
 const specs = [
@@ -18,7 +19,7 @@ const features = [
   'Balcon opțional cu balustradă din sticlă',
 ]
 
-useGsapContext(({ reduced }) => {
+useGsapContext(({ gsap, reduced }) => {
   revealOnScroll(root.value!, '.reveal', { y: 36, stagger: 0.08 })
   if (reduced) return
   // Subtle parallax on the lead image.
@@ -36,24 +37,21 @@ useGsapContext(({ reduced }) => {
       <!-- Imagery -->
       <div class="relative">
         <div class="reveal overflow-hidden rounded-3xl">
-          <img
+          <AppPicture
             data-parallax
-            src="/gallery/capsule-balcon.jpeg"
+            name="capsule-balcon"
             alt="Capsulă modulară 11.5 m cu balcon, living vitrat și dormitor, amplasată în natură la apus"
+            sizes="(min-width: 1024px) 52vw, 100vw"
             class="aspect-[4/3] w-full scale-110 object-cover"
-            loading="lazy"
-            width="1600"
-            height="1200"
           />
         </div>
         <div class="reveal absolute -bottom-8 -right-2 w-2/5 overflow-hidden rounded-2xl border-4 border-cloud shadow-2xl sm:-right-6 lg:w-1/2">
-          <img
-            src="/gallery/capsule-fara-balcon.jpeg"
+          <AppPicture
+            name="capsule-fara-balcon"
+            crop="card"
             alt="Varianta fără balcon a capsulei modulare de 11.5 m"
+            sizes="(min-width: 1024px) 26vw, 40vw"
             class="aspect-[4/3] w-full object-cover"
-            loading="lazy"
-            width="800"
-            height="600"
           />
         </div>
         <span class="text-spec absolute left-4 top-4 rounded-full bg-ink/80 px-3 py-1.5 text-xs text-cloud">
@@ -81,7 +79,7 @@ useGsapContext(({ reduced }) => {
 
         <dl class="reveal mt-9 grid grid-cols-2 gap-x-8 gap-y-5 border-t border-ink/10 pt-7">
           <div v-for="s in specs" :key="s.label">
-            <dt class="text-xs uppercase tracking-wide text-ink/45">{{ s.label }}</dt>
+            <dt class="text-xs uppercase tracking-wide text-ink/60">{{ s.label }}</dt>
             <dd class="text-spec mt-1 text-base font-medium text-ink">{{ s.value }}</dd>
           </div>
         </dl>
